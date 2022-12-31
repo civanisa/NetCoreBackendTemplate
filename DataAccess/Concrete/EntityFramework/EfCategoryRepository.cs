@@ -1,7 +1,7 @@
 ﻿using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework.Context;
-using Entities.Concrete;
+using Entities.Concrete.Entity;
 
 namespace DataAccess.Concrete.EntityFramework
 {

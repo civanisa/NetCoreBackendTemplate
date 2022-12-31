@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entities.Concrete;
+using Entities.Concrete.Entity;
 
 namespace Business.Concrete
 {
@@ -12,9 +14,9 @@ namespace Business.Concrete
             this.productRepository = productRepository;
         }
 
-        public List<Product> GetAll()
+        public IDataResult<List<Product>> GetAll()
         {
-            return productRepository.GetAll();
+            return new SuccessDataResult<List<Product>>(productRepository.GetAll(), Messages.ProductAdded);
         }
     }
 }

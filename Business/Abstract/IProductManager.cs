@@ -1,9 +1,10 @@
-﻿using Entities.Concrete;
+﻿using Core.Utilities.Results;
+using Entities.Concrete.Entity;
 
 namespace Business.Abstract
 {
     public interface IProductManager
     {
-        List<Product> GetAll();
+        IDataResult<List<Product>> GetAll();
     }
 }
