@@ -5,6 +5,7 @@ namespace Business.Abstract
 {
     public interface IProductManager
     {
+        IResult Add(Product product);
         IDataResult<List<Product>> GetAll();
     }
 }
