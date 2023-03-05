@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
@@ -19,7 +20,8 @@ namespace Business.Concrete
         }
         #endregion
 
-        [ValidationAspect(typeof(ProductValidator))]
+        [SecuredOperation("product.add,admin")]
+        [Validation(typeof(ProductValidator))]
         public IResult Add(Product product)
         {
             IResult result = BusinessRules.Run(CheckIfProductNameExists(product.ProductName),
@@ -32,10 +34,12 @@ namespace Business.Concrete
 
             return new SuccessResult(Messages.ProductAdded);
         }
+
         public IDataResult<List<Product>> GetAll()
         {
             return new SuccessDataResult<List<Product>>(productRepository.GetAll(), Messages.ProductAdded);
         }
+
         private IResult CheckIfProductCountCategoryCorrent(int CategoryId)
         {
             var result = productRepository.GetAll(p => p.CategoryId == CategoryId).Count;
@@ -43,6 +47,7 @@ namespace Business.Concrete
                 return new ErrorResult(Messages.ProductCountOfCategoryError);
             return new SuccessResult();
         }
+
         private IResult CheckIfProductNameExists(string productName)
         {
             var result = productRepository.GetAll(p => p.ProductName == productName).Any();

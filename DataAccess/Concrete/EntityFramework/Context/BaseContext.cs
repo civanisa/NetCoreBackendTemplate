@@ -1,4 +1,5 @@
-﻿using Entities.Concrete.Entity;
+﻿using Core.Entities.Concrete;
+using Entities.Concrete.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Concrete.EntityFramework.Context
@@ -11,6 +12,9 @@ namespace DataAccess.Concrete.EntityFramework.Context
         }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<OperationClaim> OperationClaims { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
         //public DbSet<Category> Categories { get; set; }
         //public DbSet<Customer> Customers { get; set; }
     }

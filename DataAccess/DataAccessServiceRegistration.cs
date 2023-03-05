@@ -10,6 +10,7 @@ namespace DataAccess
         {
             services.AddScoped<ICatagoryRepository, EfCategoryRepository>();
             services.AddScoped<IProductRepository, EfProductRepository>();
+            services.AddScoped<IUserRepository, EfUserRepository>();
             return services;
         }
     }
