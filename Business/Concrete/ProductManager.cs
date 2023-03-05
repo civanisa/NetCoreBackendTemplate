@@ -4,6 +4,7 @@ using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
+using Core.Utilities.Paging;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete.Entity;
@@ -34,10 +35,18 @@ namespace Business.Concrete
 
             return new SuccessResult(Messages.ProductAdded);
         }
-
         public IDataResult<List<Product>> GetAll()
         {
-            return new SuccessDataResult<List<Product>>(productRepository.GetAll(), Messages.ProductAdded);
+            return new SuccessDataResult<List<Product>>(productRepository.GetAll(), Messages.ProductListed);
+        }
+        public IDataResult<List<Product>> PaginateAllReturnList(Pageable pageable)
+        {
+            return new SuccessDataResult<List<Product>>(productRepository.PaginateAllReturnList(pageable), "Ürünler Sayfalanarak Listelendi.");
+        }
+
+        public IDataResult<IPaginate<Product>> PaginateAll(Pageable pageable)
+        {
+            return new SuccessDataResult<IPaginate<Product>>(productRepository.PaginateAll(pageable), "Ürünler Sayfalanarak Listelendi.");
         }
 
         private IResult CheckIfProductCountCategoryCorrent(int CategoryId)
@@ -47,7 +56,6 @@ namespace Business.Concrete
                 return new ErrorResult(Messages.ProductCountOfCategoryError);
             return new SuccessResult();
         }
-
         private IResult CheckIfProductNameExists(string productName)
         {
             var result = productRepository.GetAll(p => p.ProductName == productName).Any();

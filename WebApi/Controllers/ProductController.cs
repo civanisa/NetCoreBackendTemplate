@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Paging;
 using Entities.Concrete.Entity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,16 +17,29 @@ namespace WebApi.Controllers
         }
         #endregion
 
+        [HttpPost("Add")]
+        public IActionResult Add([FromBody] Product product)
+        {
+            return Ok(productManager.Add(product));
+        }
+
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
             return Ok(productManager.GetAll());
         }
 
-        [HttpPost("Add")]
-        public IActionResult Add([FromBody] Product product)
+
+        [HttpGet("PaginateAll")]
+        public IActionResult PaginateAll([FromQuery] Pageable? pageable)
         {
-            return Ok(productManager.Add(product));
+            return Ok(productManager.PaginateAll(pageable));
+        }
+
+        [HttpGet("PaginateAllReturnList")]
+        public IActionResult PaginateAllReturnList([FromQuery] Pageable? pageable)
+        {
+            return Ok(productManager.PaginateAllReturnList(pageable));
         }
     }
 }
