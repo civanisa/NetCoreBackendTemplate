@@ -61,15 +61,8 @@ namespace Core.DataAccess.EntityFramework
         {
             using (TContext context = new TContext())
                 return filter == null
-                    ? context.Set<TEntity>()
-                        .Skip(pageable.Size * pageable.Page)
-                        .Take(pageable.Size)
-                        .ToList()
-                    : context.Set<TEntity>()
-                        .Where(filter)
-                        .Skip(pageable.Size * pageable.Page)
-                        .Take(pageable.Size)
-                        .ToList();
+                    ? EfPaginate(context, pageable)
+                    : EFPaginateAndFilter(context, pageable, filter);
         }
         public IPaginate<TEntity> PaginateAll(Pageable pageable, Expression<Func<TEntity, bool>> filter = null)
         {
